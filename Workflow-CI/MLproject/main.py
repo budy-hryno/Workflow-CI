@@ -12,7 +12,17 @@ if __name__ == "__main__":
     warnings.filterwarnings("ignore")
     file_path = sys.argv[3] if len(sys.argv) > 3 else os.path.join(os.path.dirname(os.path.abspath(__file__)), "loan_default_preprocessing.csv")
 
-    dataset_loan_default_preprocessed = pd.read_csv(file_path)
+    try:
+        dataset_loan_default_preprocessed = pd.read_csv(file_path)
+    except FileNotFoundError:
+        # Ambil nama file script ini (main.py)
+        current_file = os.path.basename(__file__)
+        
+        # Langsung tembak isi variabel file_path ke anotasi GitHub
+        print(f"::error file={current_file}::Isi variabel file_path saat ini adalah: {file_path}")
+        
+        # Tetap exit biar workflow-nya sadar kalau ini error
+        sys.exit(1)
 
     X = dataset_loan_default_preprocessed.drop("Default", axis=1)
     y = dataset_loan_default_preprocessed["Default"]
