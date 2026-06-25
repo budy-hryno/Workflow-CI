@@ -7,7 +7,7 @@ from sklearn.model_selection import train_test_split
 
 import warnings
 import sys
-from pathLib import Path
+from pathlib import Path
 
 if __name__ == "__main__":
     
@@ -21,7 +21,7 @@ if __name__ == "__main__":
 
     # Jika argumennya cuma nama file, otomatis digabung dengan folder SCRIPT_DIR
     file_path = Path(input_arg) if Path(input_arg).is_absolute() else SCRIPT_DIR / input_arg
-    
+
     dataset_loan_default_preprocessed = pd.read_csv(file_path)
 
     X = dataset_loan_default_preprocessed.drop("Default", axis=1)
