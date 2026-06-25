@@ -10,7 +10,19 @@ import sys
 
 if __name__ == "__main__":
     warnings.filterwarnings("ignore")
-    file_path = sys.argv[3] if len(sys.argv) > 3 else os.path.join(os.path.dirname(os.path.abspath(__file__)), "loan_default_preprocessing.csv")
+    # file_path = sys.argv[3] if len(sys.argv) > 3 else os.path.join(os.path.dirname(os.path.abspath(__file__)), "loan_default_preprocessing.csv")
+
+    # Ambil folder tempat main.py berada
+    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+    # Jika ada argumen ke-3, cek apakah itu path lengkap atau cuma nama file
+    if len(sys.argv) > 3:
+        input_path = sys.argv[3]
+        # Jika input_path cuma nama file, gabungkan dengan BASE_DIR
+        file_path = input_path if os.path.isabs(input_path) else os.path.join(BASE_DIR, input_path)
+    else:
+        # Default jika argumen ke-3 tidak diisi
+        file_path = os.path.join(BASE_DIR, "loan_default_preprocessing.csv")
 
     dataset_loan_default_preprocessed = pd.read_csv(file_path)
 
