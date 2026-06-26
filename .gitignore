@@ -1,4 +1,5 @@
 mlartifacts/
+mlruns/
 /loan_default_preprocessing.csv
 mlflow.db
 modelling.py
