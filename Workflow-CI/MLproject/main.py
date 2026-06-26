@@ -43,8 +43,6 @@ if __name__ == "__main__":
 
         model_loan_default.fit(X_train, y_train)
 
-        predicted_qualities = model_loan_default.predict(X_test)
-
         mlflow.sklearn.log_model(
             sk_model=model_loan_default,
             artifact_path="model_loan_default"
