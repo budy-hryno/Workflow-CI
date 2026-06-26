@@ -40,7 +40,7 @@ jobs:
           cd Workflow-CI/MLproject
           mlflow run . --env-manager=local
 
-      - name: Save up Git LFS
+      - name: Upload to Git LFS
         run: |
           git config --global user.name ${{ secrets.username }}
           git config --global user.email ${{ secrets.email }}
