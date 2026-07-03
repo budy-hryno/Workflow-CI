@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE
+      # Ambil kode repository ke dalam environment GitHub Actions
       - uses: actions/checkout@v3
 
       # Setup Python 3.12.7
@@ -23,7 +23,7 @@ jobs:
         with:
           python-version: "3.12.7"
 
-      # Check Env Variables
+      # Cek Env Variables
       - name: Check Env
         run: |
           echo $CSV_URL
@@ -34,12 +34,13 @@ jobs:
           python -m pip install --upgrade pip
           pip install mlflow pandas scikit-learn joblib
 
-      # Run as a mlflow project
+      # Run sebagai proyek mlflow
       - name: Run mlflow project
         run: |
           cd Workflow-CI/MLproject
           mlflow run . --env-manager=local
 
+      # Upload file artifak ke Github Repository menggunakan Git LFS
       - name: Upload to Git LFS
         run: |
           git config --global user.name ${{ secrets.username }}
@@ -50,7 +51,7 @@ jobs:
           git commit -m "Track large files in mlruns with Git LFS" || true
           git push origin master
 
-      # Save models to GitHub Repository
+      # Simpan model ke GitHub Repository
       - name: Save mlruns to repo
         run: |
           git config --global user.name ${{ secrets.username }}

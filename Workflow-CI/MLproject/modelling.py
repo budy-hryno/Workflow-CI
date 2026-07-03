@@ -13,7 +13,7 @@ if __name__ == "__main__":
     
     warnings.filterwarnings("ignore")
     
-    # Ambil lokasi folder tempat main.py berada
+    # Ambil lokasi folder tempat modelling.py berada
     SCRIPT_DIR = Path(__file__).resolve().parent
 
     # Ambil input dari argumen atau pakai default nama file
@@ -29,7 +29,6 @@ if __name__ == "__main__":
 
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random_state=42)
 
-    # log parameters
     n_estimators = int(sys.argv[1]) if len(sys.argv) > 1 else 136
     max_depth = int(sys.argv[2]) if len(sys.argv) > 2 else 23
 
@@ -48,6 +47,5 @@ if __name__ == "__main__":
             artifact_path="model_loan_default"
         )
 
-        # Log metrics
         accuracy = model_loan_default.score(X_test, y_test)
         mlflow.log_metric("accuracy", accuracy)

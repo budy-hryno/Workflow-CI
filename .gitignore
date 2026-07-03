@@ -1,6 +1,14 @@
 mlartifacts/
 mlruns/
+prometheus-3.12.0/
 /loan_default_preprocessing.csv
+inference.py
+input.json
+loan_default_test.csv
+loan_default_train.csv
 mlflow.db
-modelling.py
+/modelling.py
 modelling_tuning.py
+model.skops
+myselfnote.txt
+prometheus_exporter.py
