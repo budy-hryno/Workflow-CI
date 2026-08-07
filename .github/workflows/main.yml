@@ -35,7 +35,7 @@ jobs:
           pip install mlflow
 
       - name: Set MLflow Tracking URI
-        run: echo "MLFLOW_TRACKING_URI=sqlite:///mlflow.db" >> $GITHUB_ENV
+        run: echo "MLFLOW_TRACKING_URI=sqlite:///Workflow-CI/MLproject/mlflow.db" >> $GITHUB_ENV
 
       - name: Install Python dependencies
         run: |
@@ -49,36 +49,31 @@ jobs:
 
       - name: Get latest MLflow run_id
         run: |
-          echo "=== cari mlflow.db ==="
-          find . -name "mlflow.db"
-          echo "=== MLFLOW_TRACKING_URI ==="
-          echo $MLFLOW_TRACKING_URI
-
-        # RUN_ID=$(python -c "
-        # import mlflow
-        # client = mlflow.tracking.MlflowClient()
-        # runs = client.search_runs('0', order_by=['start_time DESC'], max_results=1)
-        # print(runs[0].info.run_id)
-        # ")
-        # echo "RUN_ID=$RUN_ID" >> $GITHUB_ENV
+          RUN_ID=$(python -c "
+          import mlflow
+          client = mlflow.tracking.MlflowClient()
+          runs = client.search_runs('0', order_by=['start_time DESC'], max_results=1)
+          print(runs[0].info.run_id)
+          ")
+          echo "RUN_ID=$RUN_ID" >> $GITHUB_ENV
 
       # Upload file artifak ke Github Repository menggunakan Git LFS
-      # - name: Upload to Git LFS
-      #   run: |
-      #     git config --global user.name ${{ secrets.username }}
-      #     git config --global user.email ${{ secrets.email }}
-      #     git lfs install
-      #     git lfs track "Workflow-CI/MLproject/mlruns/**"
-      #     git add .gitattributes
-      #     git commit -m "Track large files in mlruns with Git LFS" || true
-      #     git push origin master
+      - name: Upload to Git LFS
+        run: |
+          git config --global user.name ${{ secrets.username }}
+          git config --global user.email ${{ secrets.email }}
+          git lfs install
+          git lfs track "Workflow-CI/MLproject/mlruns/**"
+          git add .gitattributes
+          git commit -m "Track large files in mlruns with Git LFS" || true
+          git push origin master
 
       # Simpan model ke GitHub Repository
-      # git add -f Workflow-CI/MLproject/mlruns/
       - name: Save mlruns to repo
         run: |
           git config --global user.name ${{ secrets.username }}
           git config --global user.email ${{ secrets.email }}
+          git add -f Workflow-CI/MLproject/mlruns/
           git add -f Workflow-CI/MLproject/mlflow.db
           git commit -m "Save mlruns and mlflow.db from CI run" || true
           git push origin master
