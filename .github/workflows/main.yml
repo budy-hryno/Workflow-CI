@@ -80,7 +80,8 @@ jobs:
 
       - name: Build Docker Model
         run: |
-          mlflow models build-docker -m "runs:/${{ env.RUN_ID }}/model_loan_default" -n "loan-default-model"
+          MODEL_PATH=$(find Workflow-CI/MLproject/mlruns -name "MLmodel" | head -1 | xargs dirname)
+          mlflow models build-docker -m "$MODEL_PATH" -n "loan-default-model"
 
       # jangan lupa set di setting
       - name: Log in to Docker Hub
