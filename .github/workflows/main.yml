@@ -80,8 +80,7 @@ jobs:
 
       - name: Build Docker Model
         run: |
-          MODEL_PATH=$(find . -name "MLmodel" | head -1 | xargs dirname)
-          echo "Model path: $MODEL_PATH"
+          MODEL_PATH=$(find Workflow-CI/MLproject/mlruns -name "MLmodel" | head -1 | xargs dirname)
           mlflow models build-docker -m "$MODEL_PATH" -n "loan-default-model"
 
       # jangan lupa set di setting
