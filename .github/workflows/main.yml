@@ -1,5 +1,6 @@
 name: Machine Learning System CI
 
+# memberi opsi push dan pull request pada branch main dan master
 on:
   push:
     branches: [main, master]
